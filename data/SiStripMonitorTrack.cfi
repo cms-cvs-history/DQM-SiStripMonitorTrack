@@ -14,7 +14,7 @@
     
     //-------------------------------------------------
     InputTag Track_src = ctfWithMaterialTracks
-    InputTag TrackInfoLabel=trackinfoCTF:updatedState
+    InputTag TrackInfo=trackinfoCTF:updatedState
     
     #        InputTag Track_src = ctfWithMaterialTracks
     #InputTag Track_src = cosmictrackfinder
@@ -29,6 +29,10 @@
     
     int32 EtaAlgo = 0
     int32 NeighStrips = 1
+	
+    PSet Layers = {
+	bool Lay_On = 1
+    }    
     
     PSet ClusterConditions = {
 	bool On    = true
@@ -56,8 +60,10 @@
     PSet TH1nClusters = { int32 Nbinx =  30  double xmin = -0.5 double xmax =  29.5 }       
     //PSet TH1localAngle = { int32 Nbinx =  721  double xmin = -180.5 double xmax =  180.5 }       
     
-    PSet TH1ClusterSignal = { int32 Nbinx = 100 double xmin =  0. double xmax = 500. }	
-    PSet TH1ClusterStoN   = { int32 Nbinx = 60 double xmin =  0. double xmax =  200. }	
+    PSet TH1ClusterCharge = { int32 Nbinx = 100 double xmin =  0. double xmax = 500. }	
+    PSet TH1ClusterStoN   = { int32 Nbinx = 60 double xmin =  0. double xmax =  200. }
+    PSet TH1ClusterChargeCorr = { int32 Nbinx = 200 double xmin =  0. double xmax = 400. }	
+    PSet TH1ClusterStoNCorr   = { int32 Nbinx = 200 double xmin =  0. double xmax =  200. }	
     PSet TH1ClusterPos = { int32 Nbinx = 768 double xmin =  -0.5 double xmax = 767.5 }
     PSet TH1ClusterNoise = { int32 Nbinx =  20  double xmin =  0.  double xmax =  10. }       
     PSet TH1ClusterWidth = { int32 Nbinx =  20  double xmin =  -0.5  double xmax =  19.5 }  
