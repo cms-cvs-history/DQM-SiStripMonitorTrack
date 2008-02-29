@@ -30,8 +30,8 @@
     int32 EtaAlgo = 0
     int32 NeighStrips = 1
 	
-    PSet Layers = {
-	bool Lay_On = 1
+    PSet Modules = {
+	bool Mod_On = 0
     }    
     
     PSet ClusterConditions = {
