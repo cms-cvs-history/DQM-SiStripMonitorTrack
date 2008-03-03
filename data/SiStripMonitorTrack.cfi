@@ -8,12 +8,12 @@
 #    string rawdigiProducer = "SiStripDigis"; 
 #    string rawdigiLabel = "VirginRaw";// "ProcessedRaw" 
 
-    InputTag rawdigiProducer = SiStripDigis; 
-    InputTag rawdigiLabel = VirginRaw;// "ProcessedRaw"  
+#    InputTag rawdigiProducer = SiStripDigis; 
+#    InputTag rawdigiLabel = VirginRaw;// "ProcessedRaw"  
 
-    VPSet RawDigiProducersList = {
-	{  string RawDigiProducer = "SiStripDigis" string RawDigiLabel = "VirginRaw"    }
-    }
+#    VPSet RawDigiProducersList = {
+#	{  string RawDigiProducer = "SiStripDigis" string RawDigiLabel = "VirginRaw"    }
+#    }
 
     //
     bool MTCCData = false
@@ -28,7 +28,7 @@
     #        InputTag Track_src = ctfWithMaterialTracks
     #InputTag Track_src = cosmictrackfinder
     #InputTag Track_src = cosmictrackfindert  #temporary solution
-/#    InputTag ClusterInfo_src = siStripClusterInfoProducer
+#    InputTag ClusterInfo_src = siStripClusterInfoProducer
     InputTag Cluster_src = siStripClusters
     
     
