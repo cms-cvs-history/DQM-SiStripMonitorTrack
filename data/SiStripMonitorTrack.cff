@@ -1,0 +1,34 @@
+include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+    
+replace SiStripMonitorTrack.TrackProducer= "TrackRefitter"
+replace SiStripMonitorTrack.TrackLabel= ""
+replace SiStripMonitorTrack.TrackInfo = "trackinfo"
+replace SiStripMonitorTrack.OutputMEsInRootFile = true
+replace SiStripMonitorTrack.OutputFileName= "/tmp/sistripmonitortrack_ctfTIF_Info.root"
+replace SiStripMonitorTrack.Cluster_src = siStripClusters
+replace SiStripMonitorTrack.Mod_On = false
+
+#### TrackInfo ####
+
+include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
+replace TrackRefitter.TrajectoryInEvent = true
+include "AnalysisAlgos/TrackInfoProducer/data/TrackInfoProducer.cfi"
+replace trackinfo.cosmicTracks=TrackRefitter
+replace trackinfo.rechits=TrackRefitter
+
+#-----------------------
+####  Reconstruction Modules
+#-----------------------
+
+include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression_SimData.cfi"
+
+sequence DQMSiStripMonitorTrack_Sim = {
+    siStripZeroSuppression,
+    TrackRefitter,
+    trackinfo,
+    SiStripMonitorTrack
+}
+
+sequence DQMSiStripMonitorTrack_Real = {
+    SiStripMonitorTrack
+}
