@@ -1,47 +1,22 @@
   # MonitorTrackGlobal
   module SiStripMonitorTrack = SiStripMonitorTrack
   {
-    string TrackProducer="ctfWithMaterialTracks"
+    string TrackProducer="generalTracks"
     string TrackLabel=""
-    string AlgoName="ctf"
+    string AlgoName="GenTk"
 
-#    string rawdigiProducer = "SiStripDigis"; 
-#    string rawdigiLabel = "VirginRaw";// "ProcessedRaw" 
-
-#    InputTag rawdigiProducer = SiStripDigis; 
-#    InputTag rawdigiLabel = VirginRaw;// "ProcessedRaw"  
-
-#    VPSet RawDigiProducersList = {
-#	{  string RawDigiProducer = "SiStripDigis" string RawDigiLabel = "VirginRaw"    }
-#    }
-
-    //
     bool MTCCData = false
     bool OutputMEsInRootFile = false
     string OutputFileName="test_monitortrackparameters_rs.root"
     
-    
     //-------------------------------------------------
     InputTag Track_src = ctfWithMaterialTracks
     InputTag TrackInfo=trackinfoCTF:updatedState
-    
-    #        InputTag Track_src = ctfWithMaterialTracks
-    #InputTag Track_src = cosmictrackfinder
-    #InputTag Track_src = cosmictrackfindert  #temporary solution
-#    InputTag ClusterInfo_src = siStripClusterInfoProducer
     InputTag Cluster_src = siStripClusters
-    
-    
-    bool UseCalibDataFromDB = true
-    
+        
     vuint32 ModulesToBeExcluded = { }
-    
-    int32 EtaAlgo = 0
-    int32 NeighStrips = 1
 	
-    PSet Modules = {
-	bool Mod_On = 1
-    }    
+    bool Mod_On = 1  
     
     PSet ClusterConditions = {
 	bool On    = true
@@ -51,23 +26,16 @@
 	double maxWidth = 200
     }    
     
-    double ElectronPerAdc      = 313.0 
-    double EquivalentNoiseCharge300um = 2160.
-    double BadStripProbability = 0.0
-    uint32 PedestalValue       = 30
-    double LowThValue          =  2
-    double HighThValue         =  5
+#     double ElectronPerAdc      = 313.0 
+#     double EquivalentNoiseCharge300um = 2160.
+#     double BadStripProbability = 0.0
+#     uint32 PedestalValue       = 30
+#     double LowThValue          =  2
+#     double HighThValue         =  5
     
-    string fileName = "insert_root_filename"
-    string psfileName = "insert_ps_filename"
-    int32 psfiletype = 121          
-    
-    PSet TH3ClusterGlobalPos = { int32 Nbinx =  200  double xmin = -120 double xmax =  120 int32 Nbiny =  200  double ymin = -120 double ymax =  120 int32 Nbinz =  1000  double zmin = -0.5 double zmax =  120 }      
-    PSet TH1TriggerBits = { int32 Nbinx =  10  double xmin = -0.5 double xmax =  9.5 }       
     PSet TH1nTracks = { int32 Nbinx =  10  double xmin = -0.5 double xmax =  9.5 }       
     PSet TH1nRecHits = { int32 Nbinx =  16  double xmin = -0.5 double xmax =  15.5 }       
     PSet TH1nClusters = { int32 Nbinx =  30  double xmin = -0.5 double xmax =  29.5 }       
-    //PSet TH1localAngle = { int32 Nbinx =  721  double xmin = -180.5 double xmax =  180.5 }       
     
     PSet TH1ClusterCharge = { int32 Nbinx = 100 double xmin =  0. double xmax = 500. }	
     PSet TH1ClusterStoN   = { int32 Nbinx = 60 double xmin =  0. double xmax =  200. }
@@ -76,9 +44,6 @@
     PSet TH1ClusterPos = { int32 Nbinx = 768 double xmin =  -0.5 double xmax = 767.5 }
     PSet TH1ClusterNoise = { int32 Nbinx =  20  double xmin =  0.  double xmax =  10. }       
     PSet TH1ClusterWidth = { int32 Nbinx =  20  double xmin =  -0.5  double xmax =  19.5 }  
-    PSet TH1ClusterEta = { int32 Nbinx =  100  double xmin = -1.2 double xmax =  1.2 }
-    PSet TH2ClusterEta = { int32 Nbinx =  100  double xmin = -1.2 double xmax =  1.2 int32 Nbiny =  100  double ymin = -1.2 double ymax =  1.2 }            
-    PSet TH1BadStrips = { int32 Nbinx =  2  double xmin = -.5 double xmax =  1.5 }
     PSet TProfileClusterPGV = { int32 Nbinx =  20  double xmin =  -10  double xmax =  10 int32 Nbiny =  20 double ymin = -0.1 double ymax =  1.2 }
     PSet Trending = { int32 Nbins =  10  int32 Steps = 5 int32 UpdateMode = 1 }
     
