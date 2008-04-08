@@ -9,9 +9,10 @@
     bool OutputMEsInRootFile = false
     string OutputFileName="test_monitortrackparameters_rs.root"
     
+    string FolderName = "Track/GlobalParameters"    
     //-------------------------------------------------
-    InputTag Track_src = ctfWithMaterialTracks
-    InputTag TrackInfo=trackinfoCTF:updatedState
+#    InputTag Track_src = ctfWithMaterialTracks
+#    InputTag TrackInfo=trackinfoCTF:updatedState
     InputTag Cluster_src = siStripClusters
         
     vuint32 ModulesToBeExcluded = { }
