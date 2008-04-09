@@ -4,8 +4,7 @@ replace SiStripMonitorTrack.TrackProducer= "TrackRefitter"
 replace SiStripMonitorTrack.TrackLabel= ""
 #replace SiStripMonitorTrack.TrackInfo = "trackinfo"
 replace SiStripMonitorTrack.OutputMEsInRootFile = true
-#replace SiStripMonitorTrack.OutputFileName= "/tmp/sistripmonitortrack_Sim_SN.root"
-replace SiStripMonitorTrack.OutputFileName= "prova_trackinfo.root"
+replace SiStripMonitorTrack.OutputFileName= "/tmp/sistripmonitortrack.root"
 replace SiStripMonitorTrack.Cluster_src = siStripClusters
 replace SiStripMonitorTrack.Mod_On = false
 
