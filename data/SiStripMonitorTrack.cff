@@ -7,6 +7,7 @@ replace SiStripMonitorTrack.OutputMEsInRootFile = true
 replace SiStripMonitorTrack.OutputFileName= "/tmp/sistripmonitortrack_prova.root"
 replace SiStripMonitorTrack.Cluster_src = siStripClusters
 replace SiStripMonitorTrack.Mod_On = false
+replace SiStripMonitorTrack.OffHisto_On = false
 
 #### TrackInfo ####
 
