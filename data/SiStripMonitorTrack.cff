@@ -3,10 +3,10 @@ include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
 replace SiStripMonitorTrack.TrackProducer= "TrackRefitter"
 replace SiStripMonitorTrack.TrackLabel= ""
 replace SiStripMonitorTrack.OutputMEsInRootFile = true
-replace SiStripMonitorTrack.OutputFileName= "/tmp/sistripmonitortrack_dsvfin.root"
+replace SiStripMonitorTrack.OutputFileName= "/tmp/sistripmonitortrack_test21X.root"
 replace SiStripMonitorTrack.Cluster_src = siStripClusters
 replace SiStripMonitorTrack.Mod_On = false
-
+replace SiStripMonitorTrack.OffHisto_On = false
 #### TrackInfo ####
 
 include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
@@ -17,8 +17,12 @@ replace TrackRefitter.TrajectoryInEvent = true
 #-----------------------
 
 include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression_SimData.cfi"
+#include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression.cfi"
+
+include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
 
 sequence DQMSiStripMonitorTrack_Sim = {
+    siStripDigis,
     siStripZeroSuppression,
     TrackRefitter,
     SiStripMonitorTrack
