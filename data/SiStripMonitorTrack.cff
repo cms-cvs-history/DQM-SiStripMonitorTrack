@@ -16,8 +16,7 @@ replace TrackRefitter.TrajectoryInEvent = true
 ####  Reconstruction Modules
 #-----------------------
 
-include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression_SimData.cfi"
-#include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression.cfi"
+include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression.cfi"
 
 include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
 
