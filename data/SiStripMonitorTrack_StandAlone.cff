@@ -1,0 +1,21 @@
+include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+
+#TrackRefitter With Material
+include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
+replace TrackRefitter.TrajectoryInEvent = true
+
+#-----------------------
+#  Reconstruction Modules
+#-----------------------
+
+include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression.cfi"
+
+include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
+
+sequence DQMSiStripMonitorTrack_Sim = {
+    siStripDigis,
+    siStripZeroSuppression,
+    TrackRefitter,
+    SiStripMonitorTrack
+}
+

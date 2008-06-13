@@ -1,0 +1,41 @@
+include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
+
+include "TrackPropagation/SteppingHelixPropagator/data/SteppingHelixPropagatorAny.cfi"
+include "TrackPropagation/SteppingHelixPropagator/data/SteppingHelixPropagatorAlong.cfi"
+include "TrackPropagation/SteppingHelixPropagator/data/SteppingHelixPropagatorOpposite.cfi"
+include "RecoLocalTracker/SiPixelRecHits/data/PixelCPEESProducers.cff" 
+
+es_source BeamSpotEarlyCollision = PoolDBESSource {
+    string connect =
+    "frontier://Frontier/CMS_COND_20X_BEAMSPOT"
+    PSet DBParameters = {
+	untracked int32 messageLevel = 0
+    }
+    VPSet toGet = {
+	{ string record = "BeamSpotObjectsRcd"
+	    string tag = "EarlyCollision_5p3cm_mc" }
+    }
+    string timetype = "runtime"
+}
+
+include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
+replace siStripDigis.ProductLabel="source"
+
+# tracker
+include "RecoLocalTracker/Configuration/data/RecoLocalTracker_Cosmics.cff"
+include "RecoTracker/Configuration/data/RecoTrackerP5.cff"
+include "RecoVertex/BeamSpotProducer/data/BeamSpot.cff"
+
+# from "Configuration/GlobalRuns/data/ReconstructionGR.cff" & "Configuration/StandardSequences/data/RawToDigi.cff"
+
+sequence trackerGR = {
+    siStripDigis, 
+    offlineBeamSpot, 
+    striptrackerlocalreco, 
+    ctftracksP5
+}
+
+sequence DQMSiStripMonitorTrack_Real = {
+    trackerGR,
+    SiStripMonitorTrack
+}
