@@ -2,7 +2,7 @@ include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
 
 #TrackRefitter With Material
 include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
-replace TrackRefitter.TrajectoryInEvent = true
+include "RecoLocalTracker/SiPixelRecHits/data/PixelCPEESProducers.cff"
 
 #-----------------------
 #  Reconstruction Modules
