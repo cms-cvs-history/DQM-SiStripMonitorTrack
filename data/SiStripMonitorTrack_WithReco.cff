@@ -20,18 +20,23 @@ es_source BeamSpotEarlyCollision = PoolDBESSource {
 
 include "EventFilter/SiStripRawToDigi/data/SiStripDigis.cfi"
 replace siStripDigis.ProductLabel="source"
-
+include "EventFilter/SiPixelRawToDigi/data/SiPixelRawToDigi.cfi"
+replace siPixelDigis.InputLabel = "source"
 # tracker
 include "RecoLocalTracker/Configuration/data/RecoLocalTracker_Cosmics.cff"
 include "RecoTracker/Configuration/data/RecoTrackerP5.cff"
 include "RecoVertex/BeamSpotProducer/data/BeamSpot.cff"
 
+include "RecoLocalTracker/SiStripClusterizer/data/SiStripClusterizer_RealData.cfi"
+replace siStripClusters.SiStripQualityLabel="test1"
+
 # from "Configuration/GlobalRuns/data/ReconstructionGR.cff" & "Configuration/StandardSequences/data/RawToDigi.cff"
 
 sequence trackerGR = {
-    siStripDigis, 
+    siStripDigis,
+    siPixelDigis, 
     offlineBeamSpot, 
-    striptrackerlocalreco, 
+    trackerlocalreco,
     ctftracksP5
 }
 
