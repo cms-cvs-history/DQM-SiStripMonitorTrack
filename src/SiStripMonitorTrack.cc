@@ -555,7 +555,6 @@ void SiStripMonitorTrack::trackStudy(const edm::EventSetup& es)
       LogTrace("SiStripMonitorTrack") << "GOOD hit" << std::endl;
       const SiStripCluster* SiStripCluster_ = &*(tkrecHit->cluster());
       if ( clusterInfos(&*SiStripCluster_,detid,"OnTrack", LV ) ) {
-	LogDebug("SiStripMonitorTrack") << "Cluster On Track On Detid "<< detid << std::endl;
 	vPSiStripCluster.push_back(SiStripCluster_);//this is the vector of the clusters on track
 	countOn++;
       }
