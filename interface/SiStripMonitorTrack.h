@@ -73,7 +73,7 @@ class SiStripMonitorTrack : public edm::EDAnalyzer {
   bool clusterInfos(const SiStripCluster* cluster, const uint32_t& detid,std::string flag, LocalVector LV);	
   void RecHitInfo(const SiStripRecHit2D* tkrecHit, LocalVector LV,reco::TrackRef track_ref, const edm::EventSetup&);
   // fill monitorables 
-  void fillModMEs(float,float,float,float,TString,float);
+  void fillModMEs(const SiStripCluster*,float,float,float,float,TString,float);
   void fillTrendMEs(float,float,float,float,std::string,float,std::string);
   void fillTrend(MonitorElement* ME,float value1);
   inline void fillME(MonitorElement* ME,float value1){if (ME!=0)ME->Fill(value1);}
