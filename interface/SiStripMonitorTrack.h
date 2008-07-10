@@ -29,10 +29,10 @@
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "Geometry/TrackerGeometryBuilder/interface/StripGeomDetUnit.h"
 
-#include "AnalysisDataFormats/SiStripClusterInfo/interface/SiStripClusterInfo.h"
 #include "TrackingTools/PatternTools/interface/Trajectory.h"
 #include "TrackingTools/PatternTools/interface/TrajTrackAssociation.h"
 #include "CalibFormats/SiStripObjects/interface/SiStripDetCabling.h"
+#include "CondFormats/SiStripObjects/interface/SiStripNoises.h"
 
 #include "DQM/SiStripCommon/interface/SiStripFolderOrganizer.h"
 //#include "DQMServices/Core/interface/DaqMonitorBEInterface.h"
@@ -70,11 +70,11 @@ class SiStripMonitorTrack : public edm::EDAnalyzer {
   void AllClusters(const edm::EventSetup& es);
   void trackStudy(const edm::EventSetup& es);
   //  LocalPoint project(const GeomDet *det,const GeomDet* projdet,LocalPoint position,LocalVector trackdirection)const;
-  bool clusterInfos(SiStripClusterInfo* cluster, const uint32_t& detid,std::string flag, LocalVector LV);	
+  bool clusterInfos(const SiStripCluster* cluster, const uint32_t& detid,std::string flag, LocalVector LV);	
   void RecHitInfo(const SiStripRecHit2D* tkrecHit, LocalVector LV,reco::TrackRef track_ref, const edm::EventSetup&);
   // fill monitorables 
-  void fillModMEs(SiStripClusterInfo*,TString,float);
-  void fillTrendMEs(SiStripClusterInfo*,std::string,float,std::string);
+  void fillModMEs(float,float,float,float,TString,float);
+  void fillTrendMEs(float,float,float,float,std::string,float,std::string);
   void fillTrend(MonitorElement* ME,float value1);
   inline void fillME(MonitorElement* ME,float value1){if (ME!=0)ME->Fill(value1);}
   inline void fillME(MonitorElement* ME,float value1,float value2){if (ME!=0)ME->Fill(value1,value2);}
@@ -150,9 +150,14 @@ class SiStripMonitorTrack : public edm::EDAnalyzer {
   SiStripFolderOrganizer folder_organizer;
   bool tracksCollection_in_EventTree;
   bool trackAssociatorCollection_in_EventTree;
+  edm::ESHandle<SiStripNoises> noiseHandle_;
   int runNb, eventNb;
   int firstEvent;
   int countOn, countOff, countAll, NClus[4][3];
+  float charge_;
+  float noise_;
+  float width_;
+  float position_;
   uint32_t neighbourStripNumber;
 };
 #endif
