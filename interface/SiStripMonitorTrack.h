@@ -142,6 +142,7 @@ class SiStripMonitorTrack : public edm::EDAnalyzer {
   edm::InputTag Cluster_src_;
 
   bool Mod_On_;
+  bool Trend_On_;
   bool OffHisto_On_;
   int off_Flag;
   std::vector<uint32_t> ModulesToBeExcluded_;

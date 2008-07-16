@@ -17,8 +17,9 @@
         
     vuint32 ModulesToBeExcluded = { }
 	
-    bool Mod_On = 1  
+    bool Mod_On = 0  
     bool OffHisto_On = 1
+    bool Trend_On = 0
     
     PSet ClusterConditions = {
 	bool On    = true

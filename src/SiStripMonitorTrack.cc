@@ -30,6 +30,7 @@ SiStripMonitorTrack::SiStripMonitorTrack(const edm::ParameterSet& conf):
   conf_(conf),
   Cluster_src_( conf.getParameter<edm::InputTag>( "Cluster_src" ) ),
   Mod_On_(conf.getParameter<bool>("Mod_On")),
+  Trend_On_(conf.getParameter<bool>("Trend_On")),
   OffHisto_On_(conf.getParameter<bool>("OffHisto_On")),
   folder_organizer(), tracksCollection_in_EventTree(true),
   firstEvent(-1),
@@ -123,7 +124,8 @@ void SiStripMonitorTrack::analyze(const edm::Event& e, const edm::EventSetup& es
       iModME = ModMEsMap.find(name);
       if(iModME!=ModMEsMap.end()) {
        	fillME(   iModME->second.nClusters,      NClus[i][j]);
-	fillTrend(iModME->second.nClustersTrend, NClus[i][j]);
+	if(Trend_On_)
+	  fillTrend(iModME->second.nClustersTrend, NClus[i][j]);
       }
       nTot+=NClus[i][j];
       NClus[i][j]=0;
@@ -132,9 +134,10 @@ void SiStripMonitorTrack::analyze(const edm::Event& e, const edm::EventSetup& es
     name=flags[j]+"_NumberOfClusters";
     iME = MEMap.find(name);
     if(iME!=MEMap.end() && nTot) iME->second->Fill(nTot);
-    iME = MEMap.find(name+"Trend");
-    if(iME!=MEMap.end() && nTot) fillTrend(iME->second,nTot);
-
+	if(Trend_On_){
+	  iME = MEMap.find(name+"Trend");
+	  if(iME!=MEMap.end() && nTot) fillTrend(iME->second,nTot);
+	}
  } // loop over ontrack, offtrack
   
 }
@@ -166,8 +169,10 @@ void SiStripMonitorTrack::book()
       name=flags[j]+"_NumberOfClusters";
       if(MEMap.find(name)==MEMap.end()) {
 	MEMap[name]=bookME1D("TH1nClusters", name.Data()); 
-	name+="Trend";
-	MEMap[name]=bookMETrend("TH1nClusters", name.Data());
+	if(Trend_On_){
+	  name+="Trend";
+	  MEMap[name]=bookMETrend("TH1nClusters", name.Data());
+	}      
       }
     }// End Loop on onTrack, offTrack
     
@@ -269,35 +274,44 @@ void SiStripMonitorTrack::bookTrendMEs(TString name,int32_t layer,uint32_t id,st
     //Cluster Width
     theModMEs.ClusterWidth=bookME1D("TH1ClusterWidth", hidmanager.createHistoLayer("Summary_cWidth",name.Data(),rest,flag).c_str()); 
     dbe->tag(theModMEs.ClusterWidth,layer); 
-    theModMEs.ClusterWidthTrend=bookMETrend("TH1ClusterWidth", hidmanager.createHistoLayer("Trend_cWidth",name.Data(),rest,flag).c_str()); 
-    dbe->tag(theModMEs.ClusterWidthTrend,layer); 
+    //Trends
+    if(Trend_On_){
+      theModMEs.ClusterWidthTrend=bookMETrend("TH1ClusterWidth", hidmanager.createHistoLayer("Trend_cWidth",name.Data(),rest,flag).c_str()); 
+      dbe->tag(theModMEs.ClusterWidthTrend,layer); 
+      theModMEs.ClusterNoiseTrend=bookMETrend("TH1ClusterNoise", hidmanager.createHistoLayer("Trend_cNoise",name.Data(),rest,flag).c_str()); 
+      dbe->tag(theModMEs.ClusterNoiseTrend,layer); 
+      theModMEs.ClusterChargeTrend=bookMETrend("TH1ClusterCharge", hidmanager.createHistoLayer("Trend_cCharge",name.Data(),rest,flag).c_str());
+      dbe->tag(theModMEs.ClusterChargeTrend,layer); 
+      theModMEs.ClusterStoNTrend=bookMETrend("TH1ClusterStoN", hidmanager.createHistoLayer("Trend_cStoN",name.Data(),rest,flag).c_str());
+      dbe->tag(theModMEs.ClusterStoNTrend,layer); 
+    }
 
     //Cluster Noise
     theModMEs.ClusterNoise=bookME1D("TH1ClusterNoise", hidmanager.createHistoLayer("Summary_cNoise",name.Data(),rest,flag).c_str()); 
     dbe->tag(theModMEs.ClusterNoise,layer); 
-    theModMEs.ClusterNoiseTrend=bookMETrend("TH1ClusterNoise", hidmanager.createHistoLayer("Trend_cNoise",name.Data(),rest,flag).c_str()); 
-    dbe->tag(theModMEs.ClusterNoiseTrend,layer); 
+
     //Cluster Charge
     theModMEs.ClusterCharge=bookME1D("TH1ClusterCharge", hidmanager.createHistoLayer("Summary_cCharge",name.Data(),rest,flag).c_str());
     dbe->tag(theModMEs.ClusterCharge,layer);
-    theModMEs.ClusterChargeTrend=bookMETrend("TH1ClusterCharge", hidmanager.createHistoLayer("Trend_cCharge",name.Data(),rest,flag).c_str());
-    dbe->tag(theModMEs.ClusterChargeTrend,layer); 
+  
     //Cluster StoN
     theModMEs.ClusterStoN=bookME1D("TH1ClusterStoN", hidmanager.createHistoLayer("Summary_cStoN",name.Data(),rest,flag).c_str());
     dbe->tag(theModMEs.ClusterStoN,layer); 
-    theModMEs.ClusterStoNTrend=bookMETrend("TH1ClusterStoN", hidmanager.createHistoLayer("Trend_cStoN",name.Data(),rest,flag).c_str());
-    dbe->tag(theModMEs.ClusterStoNTrend,layer); 
     if(flag=="OnTrack"){
       //Cluster Charge Corrected
       theModMEs.ClusterChargeCorr=bookME1D("TH1ClusterChargeCorr", hidmanager.createHistoLayer("Summary_cChargeCorr",name.Data(),rest,flag).c_str());
       dbe->tag(theModMEs.ClusterChargeCorr,layer); 
-      theModMEs.ClusterChargeCorrTrend=bookMETrend("TH1ClusterChargeCorr", hidmanager.createHistoLayer("Trend_cChargeCorr",name.Data(),rest,flag).c_str());
-      dbe->tag(theModMEs.ClusterChargeCorrTrend,layer); 
       //Cluster StoN Corrected
       theModMEs.ClusterStoNCorr=bookME1D("TH1ClusterStoNCorr", hidmanager.createHistoLayer("Summary_cStoNCorr",name.Data(),rest,flag).c_str());
       dbe->tag(theModMEs.ClusterStoNCorr,layer); 
-      theModMEs.ClusterStoNCorrTrend=bookMETrend("TH1ClusterStoNCorr", hidmanager.createHistoLayer("Trend_cStoNCorr",name.Data(),rest,flag).c_str());
-      //      dbe->tag(theModMEs.ClusterStoNCorrTrend,layer); 
+      
+      if(Trend_On_){
+	theModMEs.ClusterChargeCorrTrend=bookMETrend("TH1ClusterChargeCorr", hidmanager.createHistoLayer("Trend_cChargeCorr",name.Data(),rest,flag).c_str());
+	dbe->tag(theModMEs.ClusterChargeCorrTrend,layer); 
+	theModMEs.ClusterStoNCorrTrend=bookMETrend("TH1ClusterStoNCorr", hidmanager.createHistoLayer("Trend_cStoNCorr",name.Data(),rest,flag).c_str());
+	dbe->tag(theModMEs.ClusterStoNCorrTrend,layer); 
+      }
+      
     }
     //Cluster Position
     theModMEs.ClusterPos=bookME1D("TH1ClusterPos", hidmanager.createHistoLayer("Summary_cPos",name.Data(),rest,flag).c_str());  
@@ -315,42 +329,48 @@ void SiStripMonitorTrack::bookSubDetMEs(TString name,TString flag)//Histograms a
   if(iModME==ModMEsMap.end()){
     ModMEs theModMEs; 
     //Number of Cluster 
-    sprintf(completeName,"Trend_NumberOfClusters_%s",name.Data());
-    theModMEs.nClustersTrend=bookMETrend("TH1nClusters", completeName);
     sprintf(completeName,"Summary_NumberOfClusters_%s",name.Data());
     theModMEs.nClusters=bookME1D("TH1nClusters", completeName);
     //Cluster Width
-    sprintf(completeName,"Trend_cWidth_%s",name.Data());
-    theModMEs.ClusterWidthTrend=bookMETrend("TH1ClusterWidth", completeName);
     sprintf(completeName,"Summary_cWidth_%s",name.Data());
     theModMEs.ClusterWidth=bookME1D("TH1ClusterWidth", completeName);
     //Cluster Noise
-    sprintf(completeName,"Trend_cNoise_%s",name.Data());
-    theModMEs.ClusterNoiseTrend=bookMETrend("TH1ClusterNoise", completeName);
     sprintf(completeName,"Summary_cNoise_%s",name.Data());
     theModMEs.ClusterNoise=bookME1D("TH1ClusterNoise", completeName);
     //Cluster Charge
-    sprintf(completeName,"Trend_cCharge_%s",name.Data());
-    theModMEs.ClusterChargeTrend=bookMETrend("TH1ClusterCharge", completeName);
     sprintf(completeName,"Summary_cCharge_%s",name.Data());
     theModMEs.ClusterCharge=bookME1D("TH1ClusterCharge", completeName);
     //Cluster StoN
-    sprintf(completeName,"Trend_cStoN_%s",name.Data());
-    theModMEs.ClusterStoNTrend=bookMETrend("TH1ClusterStoN", completeName);
     sprintf(completeName,"Summary_cStoN_%s",name.Data());
     theModMEs.ClusterStoN=bookME1D("TH1ClusterStoN", completeName);
+    if(Trend_On_){
+      sprintf(completeName,"Trend_NumberOfClusters_%s",name.Data());
+      theModMEs.nClustersTrend=bookMETrend("TH1nClusters", completeName);
+      sprintf(completeName,"Trend_cWidth_%s",name.Data());
+      theModMEs.ClusterWidthTrend=bookMETrend("TH1ClusterWidth", completeName);
+      sprintf(completeName,"Trend_cNoise_%s",name.Data());
+      theModMEs.ClusterNoiseTrend=bookMETrend("TH1ClusterNoise", completeName);
+      sprintf(completeName,"Trend_cCharge_%s",name.Data());
+      theModMEs.ClusterChargeTrend=bookMETrend("TH1ClusterCharge", completeName);
+      sprintf(completeName,"Trend_cStoN_%s",name.Data());
+      theModMEs.ClusterStoNTrend=bookMETrend("TH1ClusterStoN", completeName); 
+    }
+
     if (flag=="OnTrack"){    //Cluster StoNCorr
-      sprintf(completeName,"Trend_cStoNCorr_%s",name.Data());
-      theModMEs.ClusterStoNCorrTrend=bookMETrend("TH1ClusterStoNCorr", completeName);
+
       sprintf(completeName,"Summary_cStoNCorr_%s",name.Data());
       theModMEs.ClusterStoNCorr=bookME1D("TH1ClusterStoNCorr", completeName);
-      
+      sprintf(completeName,"Summary_cChargeCorr_%s",name.Data());
+      theModMEs.ClusterChargeCorr=bookME1D("TH1ClusterChargeCorr", completeName);
+
+      if(Trend_On_){ 
+      sprintf(completeName,"Trend_cStoNCorr_%s",name.Data());
+      theModMEs.ClusterStoNCorrTrend=bookMETrend("TH1ClusterStoNCorr", completeName);     
       //Cluster ChargeCorr
       sprintf(completeName,"Trend_cChargeCorr_%s",name.Data());
       theModMEs.ClusterChargeCorrTrend=bookMETrend("TH1ClusterChargeCorr", completeName);
-      sprintf(completeName,"Summary_cChargeCorr_%s",name.Data());
-      theModMEs.ClusterChargeCorr=bookME1D("TH1ClusterChargeCorr", completeName);
-}
+      }
+    }
     //bookeeping
     ModMEsMap[name]=theModMEs;
   }
