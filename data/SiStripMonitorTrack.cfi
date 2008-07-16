@@ -37,7 +37,7 @@
     
     PSet TH1nTracks = { int32 Nbinx =  10  double xmin = -0.5 double xmax =  9.5 }       
     PSet TH1nRecHits = { int32 Nbinx =  16  double xmin = -0.5 double xmax =  15.5 }       
-    PSet TH1nClusters = { int32 Nbinx =  30  double xmin = -0.5 double xmax =  29.5 }       
+    PSet TH1nClusters = { int32 Nbinx =  50  double xmin = -0.5 double xmax =  99.5 }       
     
     PSet TH1ClusterCharge = { int32 Nbinx = 100 double xmin =  0. double xmax = 500. }	
     PSet TH1ClusterStoN   = { int32 Nbinx = 60 double xmin =  0. double xmax =  200. }
