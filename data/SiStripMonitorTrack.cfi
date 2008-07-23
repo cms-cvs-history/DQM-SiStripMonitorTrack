@@ -1,25 +1,28 @@
-  # MonitorTrackGlobal
-  module SiStripMonitorTrack = SiStripMonitorTrack
-  {
+# MonitorTrackGlobal
+module SiStripMonitorTrack = SiStripMonitorTrack
+{
     string TrackProducer="generalTracks"
     string TrackLabel=""
     string AlgoName="GenTk"
-
+    
+    string RawDigiProducer = "siStripDigis"
+    string RawDigiLabel    = "VirginRaw"
+    
     bool MTCCData = false
     bool OutputMEsInRootFile = false
     string OutputFileName="test_monitortrackparameters_rs.root"
     
     string FolderName = "Track/GlobalParameters"    
     //-------------------------------------------------
-#    InputTag Track_src = ctfWithMaterialTracks
-#    InputTag TrackInfo=trackinfoCTF:updatedState
+    #    InputTag Track_src = ctfWithMaterialTracks
+    #    InputTag TrackInfo=trackinfoCTF:updatedState
     InputTag Cluster_src = siStripClusters
-        
+    
     vuint32 ModulesToBeExcluded = { }
-	
-    bool Mod_On = 0  
-    bool OffHisto_On = 1
-    bool Trend_On = 0
+    
+    bool      Mod_On = false  
+    bool OffHisto_On = true
+    bool    Trend_On = false
     
     PSet ClusterConditions = {
 	bool On    = true
@@ -29,12 +32,12 @@
 	double maxWidth = 200
     }    
     
-#     double ElectronPerAdc      = 313.0 
-#     double EquivalentNoiseCharge300um = 2160.
-#     double BadStripProbability = 0.0
-#     uint32 PedestalValue       = 30
-#     double LowThValue          =  2
-#     double HighThValue         =  5
+    #     double ElectronPerAdc      = 313.0 
+    #     double EquivalentNoiseCharge300um = 2160.
+    #     double BadStripProbability = 0.0
+    #     uint32 PedestalValue       = 30
+    #     double LowThValue          =  2
+    #     double HighThValue         =  5
     
     PSet TH1nTracks = { int32 Nbinx =  10  double xmin = -0.5 double xmax =  9.5 }       
     PSet TH1nRecHits = { int32 Nbinx =  16  double xmin = -0.5 double xmax =  15.5 }       
@@ -47,8 +50,8 @@
     PSet TH1ClusterPos = { int32 Nbinx = 768 double xmin =  -0.5 double xmax = 767.5 }
     PSet TH1ClusterNoise = { int32 Nbinx =  20  double xmin =  0.  double xmax =  10. }       
     PSet TH1ClusterWidth = { int32 Nbinx =  20  double xmin =  -0.5  double xmax =  19.5 }  
+    PSet TH1ClusterSymmEtaCC = { int32 Nbinx =  120  double xmin =  -0.1  double xmax =  1.1 }  
     PSet TProfileClusterPGV = { int32 Nbinx =  20  double xmin =  -10  double xmax =  10 int32 Nbiny =  20 double ymin = -0.1 double ymax =  1.2 }
     PSet Trending = { int32 Nbins =  10  int32 Steps = 5 int32 UpdateMode = 1 }
-    
     
 }
