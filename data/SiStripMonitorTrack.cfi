@@ -20,7 +20,7 @@ module SiStripMonitorTrack = SiStripMonitorTrack
     
     vuint32 ModulesToBeExcluded = { }
     
-    bool      Mod_On = false  
+    bool      Mod_On = true 
     bool OffHisto_On = true
     bool    Trend_On = false
     
