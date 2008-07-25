@@ -253,7 +253,7 @@ void SiStripMonitorTrack::bookModMEs(TString name, uint32_t id)//Histograms at M
     theModMEs.ClusterStoNCorr=bookME1D("TH1ClusterStoNCorr", hidmanager.createHistoId("ClusterStoNCorr_OnTrack",name.Data(),id).c_str());
     dbe->tag(theModMEs.ClusterStoNCorr,id); 
     //Cluster Position
-    theModMEs.ClusterPos=bookME1D("TH1ClusterPos", hidmanager.createHistoId("ClusterPos_OnTrack",name.Data(),id).c_str());  
+    theModMEs.ClusterPos=bookME1D("TH1ClusterPos", hidmanager.createHistoId("ClusterPosition_OnTrack",name.Data(),id).c_str());  
     dbe->tag(theModMEs.ClusterPos,id); 
     //Cluster PGV
     theModMEs.ClusterPGV=bookMEProfile("TProfileClusterPGV", hidmanager.createHistoId("PGV_OnTrack",name.Data(),id).c_str()); 
@@ -342,7 +342,7 @@ void SiStripMonitorTrack::bookTrendMEs(TString name,int32_t layer,uint32_t id,st
       
     }
     //Cluster Position
-    theModMEs.ClusterPos=bookME1D("TH1ClusterPos", hidmanager.createHistoLayer("Summary_ClusterPos",name.Data(),rest,flag).c_str());  
+    theModMEs.ClusterPos=bookME1D("TH1ClusterPos", hidmanager.createHistoLayer("Summary_ClusterPosition",name.Data(),rest,flag).c_str());  
     dbe->tag(theModMEs.ClusterPos,layer); 
     //bookeeping
     ModMEsMap[hid]=theModMEs;
