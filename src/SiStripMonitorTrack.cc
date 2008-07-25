@@ -274,7 +274,7 @@ void SiStripMonitorTrack::bookTrendMEs(TString name,int32_t layer,uint32_t id,st
   }else if( subdetid==4){
     // ---------------------------  TID  --------------------------- //
     TIDDetId tid1 = TIDDetId(id);
-    sprintf(rest,"TID__wheel__%d",tid1.wheel());
+    sprintf(rest,"TID__side__%d__wheel__%d",tid1.side(),tid1.wheel());
   }else if( subdetid==5){
     // ---------------------------  TOB  --------------------------- //
     TOBDetId tob1 = TOBDetId(id);
@@ -282,7 +282,7 @@ void SiStripMonitorTrack::bookTrendMEs(TString name,int32_t layer,uint32_t id,st
   }else if( subdetid==6){
     // ---------------------------  TEC  --------------------------- //
     TECDetId tec1 = TECDetId(id);
-    sprintf(rest,"TEC__wheel__%d",tec1.wheel());
+    sprintf(rest,"TEC__side__%d__wheel__%d",tec1.side(),tec1.wheel());
   }else{
     // ---------------------------  ???  --------------------------- //
     edm::LogError("SiStripTkDQM|WrongInput")<<"no such subdetector type :"<<subdetid<<" no folder set!"<<std::endl;
@@ -693,7 +693,7 @@ bool SiStripMonitorTrack::clusterInfos(const SiStripCluster* cluster_, const uin
   }else if( subdetid==4){
     // ---------------------------  TID  --------------------------- //
     TIDDetId tid1 = TIDDetId(detid);
-    sprintf(rest,"TID__wheel__%d",tid1.wheel());
+    sprintf(rest,"TID__side__%d__wheel__%d",tid1.side(),tid1.wheel());
   }else if( subdetid==5){
     // ---------------------------  TOB  --------------------------- //
     TOBDetId tob1 = TOBDetId(detid);
@@ -701,7 +701,7 @@ bool SiStripMonitorTrack::clusterInfos(const SiStripCluster* cluster_, const uin
   }else if( subdetid==6){
     // ---------------------------  TEC  --------------------------- //
     TECDetId tec1 = TECDetId(detid);
-    sprintf(rest,"TEC__wheel__%d",tec1.wheel());
+    sprintf(rest,"TEC__side__%d__wheel__%d",tec1.side(),tec1.wheel());
   }else{
     // ---------------------------  ???  --------------------------- //
     edm::LogError("SiStripTkDQM|WrongInput")<<"no such subdetector type :"<<subdetid<<" no folder set!"<<std::endl;
