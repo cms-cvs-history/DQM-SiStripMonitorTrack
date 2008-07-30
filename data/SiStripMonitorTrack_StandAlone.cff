@@ -1,12 +1,22 @@
 include "DQM/SiStripMonitorTrack/data/SiStripMonitorTrack.cfi"
 
+replace SiStripMonitorTrack.TrackProducer= "TrackRefitter"
+replace SiStripMonitorTrack.TrackLabel= ""
+#replace SiStripMonitorTrack.TrackInfo = "trackinfo"
+replace SiStripMonitorTrack.OutputMEsInRootFile = true
+replace SiStripMonitorTrack.OutputFileName= "/tmp/sistripmonitortrack_prova.root"
+replace SiStripMonitorTrack.Cluster_src = siStripClusters
+replace SiStripMonitorTrack.Mod_On = true
+replace SiStripMonitorTrack.OffHisto_On = true
+replace SiStripMonitorTrack.Trend_On = false
+
 #TrackRefitter With Material
 include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
 include "RecoLocalTracker/SiPixelRecHits/data/PixelCPEESProducers.cff"
 
-#-----------------------
+#-------------------------
 #  Reconstruction Modules
-#-----------------------
+#-------------------------
 
 include "RecoLocalTracker/SiStripZeroSuppression/data/SiStripZeroSuppression.cfi"
 
@@ -18,4 +28,3 @@ sequence DQMSiStripMonitorTrack_Sim = {
     TrackRefitter,
     SiStripMonitorTrack
 }
-
