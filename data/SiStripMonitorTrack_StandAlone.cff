@@ -6,9 +6,10 @@ replace SiStripMonitorTrack.TrackLabel= ""
 replace SiStripMonitorTrack.OutputMEsInRootFile = true
 replace SiStripMonitorTrack.OutputFileName= "testSim.root"
 replace SiStripMonitorTrack.Cluster_src = siStripClusters
-replace SiStripMonitorTrack.Mod_On = true
-replace SiStripMonitorTrack.OffHisto_On = true
-replace SiStripMonitorTrack.Trend_On = false
+replace SiStripMonitorTrack.Mod_On        = false
+replace SiStripMonitorTrack.OffHisto_On   = true
+replace SiStripMonitorTrack.Trend_On      = true
+replace SiStripMonitorTrack.CCAnalysis_On = false
 
 #TrackRefitter With Material
 include "RecoTracker/TrackProducer/data/RefitterWithMaterial.cff"
