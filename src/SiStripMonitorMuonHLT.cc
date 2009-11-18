@@ -13,10 +13,11 @@
 //
 // Original Author:  Eric Chabert
 //         Created:  Wed Sep 23 17:26:42 CEST 2009
-// $Id: SiStripMonitorMuonHLT.cc,v 1.1 2009/10/05 17:05:48 echabert Exp $
+// $Id: SiStripMonitorMuonHLT.cc,v 1.2 2009/10/07 11:59:39 echabert Exp $
 //
 
 #include "DQM/SiStripMonitorTrack/interface/SiStripMonitorMuonHLT.h"
+#include "FWCore/Framework/interface/Selector.h"
 
 using namespace edm;
 using namespace reco;
@@ -115,15 +116,35 @@ SiStripMonitorMuonHLT::analyze (const edm::Event & iEvent, const edm::EventSetup
   const TrackerGeometry *theTrackerGeometry = TG.product ();
   const TrackerGeometry & theTracker (*theTrackerGeometry);
 
+  //Access to L3MuonCand
   Handle < RecoChargedCandidateCollection > l3mucands;
-  iEvent.getByLabel (l3collectionTag_, l3mucands);
+  bool accessToL3Muons = true;
+  try
+     {
+  	iEvent.getByLabel (l3collectionTag_, l3mucands);
+     }
+     catch (cms::Exception& exception)
+     {
+        LogDebug ("SiStripMonitorHLTMuon") <<  "   ===> no access to L3MuonCandidates, cannot run on the event: "<<iEvent.eventAuxiliary ().event() <<" run: "<<iEvent.eventAuxiliary ().run()  << endl;
+        accessToL3Muons = false;
+     }
   RecoChargedCandidateCollection::const_iterator cand;
-
+  
+  //Access to clusters
   Handle < edm::LazyGetter < SiStripCluster > >clusters;
-  iEvent.getByLabel (clusterCollectionTag_, clusters);
+  bool accessToClusters = true;
+  try
+     {
+  	iEvent.getByLabel (clusterCollectionTag_, clusters);
+     }
+     catch (cms::Exception& exception)
+     {
+        LogDebug ("SiStripMonitorHLTMuon") <<  "   ===> no access to LazzyGetterClusters, cannot run on the event: "<<iEvent.eventAuxiliary ().event() <<" run: "<<iEvent.eventAuxiliary ().run()  << endl;
+        accessToClusters = false;
+     }
   edm::LazyGetter < SiStripCluster >::record_iterator clust;
 
-  if (!clusters.failedToGet ())
+  if (accessToClusters && !clusters.failedToGet ())
     {
       for (clust = clusters->begin_record (); clust != clusters->end_record (); ++clust)
 	{
@@ -143,7 +164,7 @@ SiStripMonitorMuonHLT::analyze (const edm::Event & iEvent, const edm::EventSetup
 	}
     }
 
-  if (!l3mucands.failedToGet ())
+  if (accessToL3Muons  && !l3mucands.failedToGet ())
     {
       for (cand = l3mucands->begin (); cand != l3mucands->end (); ++cand)
 	{
