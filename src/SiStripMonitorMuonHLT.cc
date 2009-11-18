@@ -13,7 +13,7 @@
 //
 // Original Author:  Eric Chabert
 //         Created:  Wed Sep 23 17:26:42 CEST 2009
-// $Id: SiStripMonitorMuonHLT.cc,v 1.2 2009/10/07 11:59:39 echabert Exp $
+// $Id: SiStripMonitorMuonHLT.cc,v 1.2.2.1 2009/11/18 09:21:25 echabert Exp $
 //
 
 #include "DQM/SiStripMonitorTrack/interface/SiStripMonitorMuonHLT.h"
@@ -144,7 +144,7 @@ SiStripMonitorMuonHLT::analyze (const edm::Event & iEvent, const edm::EventSetup
      }
   edm::LazyGetter < SiStripCluster >::record_iterator clust;
 
-  if (accessToClusters && !clusters.failedToGet ())
+  if (accessToClusters && !clusters.failedToGet () && clusters.isValid())
     {
       for (clust = clusters->begin_record (); clust != clusters->end_record (); ++clust)
 	{
@@ -164,7 +164,7 @@ SiStripMonitorMuonHLT::analyze (const edm::Event & iEvent, const edm::EventSetup
 	}
     }
 
-  if (accessToL3Muons  && !l3mucands.failedToGet ())
+  if (accessToL3Muons  && !l3mucands.failedToGet () && l3mucands.isValid())
     {
       for (cand = l3mucands->begin (); cand != l3mucands->end (); ++cand)
 	{
