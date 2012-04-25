@@ -3,9 +3,9 @@ import FWCore.ParameterSet.Config as cms
 from DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi import *
 # Raw Digis
 SiStripMonitorTrack.RawDigis_On     = True
-SiStripMonitorTrack.RawDigiProducer = 'simSiStripDigis'
-SiStripMonitorTrack.RawDigiLabel    = 'VirginRaw'
-#
+SiStripMonitorTrack.RawDigiProducer = 'mix'
+SiStripMonitorTrack.RawDigiLabel    = 'simSiStripDigisVirginRaw'
+
 SiStripMonitorTrack.TrackProducer = 'TrackRefitter'
 SiStripMonitorTrack.TrackLabel    = ''
 SiStripMonitorTrack.OutputMEsInRootFile = True
@@ -40,18 +40,6 @@ RandomNumberGeneratorService = cms.Service(
     mix = cms.PSet( initialSeed = cms.untracked.uint32(12345),
                     engineName = cms.untracked.string('HepJamesRandom')
                     ),
-    simSiPixelDigis = cms.PSet( initialSeed = cms.untracked.uint32(1234567),
-                                engineName = cms.untracked.string('HepJamesRandom')
-                                ),
-    simSiStripDigis = cms.PSet( initialSeed = cms.untracked.uint32(1234567),
-                                engineName = cms.untracked.string('HepJamesRandom')
-                                ),
-    simEcalUnsuppressedDigis = cms.PSet( initialSeed = cms.untracked.uint32(1234567),
-                                         engineName = cms.untracked.string('HepJamesRandom')
-                                         ),
-    simHcalUnsuppressedDigis = cms.PSet( initialSeed = cms.untracked.uint32(11223344),
-                                         engineName = cms.untracked.string('HepJamesRandom')
-                                         ),
     simMuonCSCDigis = cms.PSet( initialSeed = cms.untracked.uint32(11223344),
                                 engineName = cms.untracked.string('HepJamesRandom')
                                 ),
@@ -66,11 +54,11 @@ RandomNumberGeneratorService = cms.Service(
 from SimGeneral.MixingModule.mixNoPU_cfi import *
 # SiStrip Digitizer
 from SimTracker.SiStripDigitizer.SiStripDigi_APVModePeak_cff import *
-simSiStripDigis.ZeroSuppression     = False
-simSiStripDigis.NoiseSigmaThreshold = 0
+#FIXPU#simSiStripDigis.ZeroSuppression     = False
+#FIXPU#simSiStripDigis.NoiseSigmaThreshold = 0
 #
 
-DQMSiStripMonitorTrack_RawSim = cms.Sequence( mix * simSiStripDigis
+DQMSiStripMonitorTrack_RawSim = cms.Sequence( mix
                                               *
                                               siStripZeroSuppression
                                               *
@@ -82,7 +70,7 @@ DQMSiStripMonitorTrack_RawSim = cms.Sequence( mix * simSiStripDigis
 # reconstruction sequence for Cosmics
 from Configuration.StandardSequences.ReconstructionCosmics_cff import *
 
-DQMSiStripMonitorTrack_CosmicRawSim = cms.Sequence( mix * simSiStripDigis
+DQMSiStripMonitorTrack_CosmicRawSim = cms.Sequence( mix
                                                     *
                                                     trackerCosmics
                                                     *

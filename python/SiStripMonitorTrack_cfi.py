@@ -10,8 +10,8 @@ SiStripMonitorTrack = cms.EDAnalyzer(
     AlgoName      = cms.string('GenTk'),
     
     RawDigis_On     = cms.bool(False),
-    RawDigiProducer = cms.string('simSiStripDigis'),
-    RawDigiLabel    = cms.string('VirginRaw'),
+    RawDigiProducer = cms.string('mix'),
+    RawDigiLabel    = cms.string('simSiStripDigisVirginRaw'),
     
     OutputMEsInRootFile = cms.bool(False),
     OutputFileName = cms.string('test_monitortrackparameters_rs.root'),    
