@@ -3,9 +3,9 @@ import FWCore.ParameterSet.Config as cms
 from DQM.SiStripMonitorTrack.SiStripMonitorTrack_cfi import *
 # Raw Digis
 SiStripMonitorTrack.RawDigis_On     = True
-SiStripMonitorTrack.RawDigiProducer = 'mix'
-SiStripMonitorTrack.RawDigiLabel    = 'simSiStripDigisVirginRaw'
-
+SiStripMonitorTrack.RawDigiProducer = 'simSiStripDigis'
+SiStripMonitorTrack.RawDigiLabel    = 'VirginRaw'
+#
 SiStripMonitorTrack.TrackProducer = 'TrackRefitter'
 SiStripMonitorTrack.TrackLabel    = ''
 SiStripMonitorTrack.OutputMEsInRootFile = True
@@ -54,8 +54,10 @@ RandomNumberGeneratorService = cms.Service(
 from SimGeneral.MixingModule.mixNoPU_cfi import *
 # SiStrip Digitizer
 from SimTracker.SiStripDigitizer.SiStripDigi_APVModePeak_cff import *
-#FIXPU#simSiStripDigis.ZeroSuppression     = False
-#FIXPU#simSiStripDigis.NoiseSigmaThreshold = 0
+#simSiStripDigis.ZeroSuppression     = False
+#simSiStripDigis.NoiseSigmaThreshold = 0
+mix.digitizers.strip.ZeroSuppression = False
+mix.digitizers.strip.NoiseSigmaThreshold = 0
 #
 
 DQMSiStripMonitorTrack_RawSim = cms.Sequence( mix
